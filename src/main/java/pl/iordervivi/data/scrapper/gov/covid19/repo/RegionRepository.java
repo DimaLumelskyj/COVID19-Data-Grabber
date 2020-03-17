@@ -6,4 +6,5 @@ import pl.iordervivi.data.scrapper.gov.covid19.domain.Region;
 
 @Repository
 public interface RegionRepository extends JpaRepository<Region, Integer> {
+
 }

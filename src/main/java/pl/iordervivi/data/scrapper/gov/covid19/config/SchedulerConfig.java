@@ -5,6 +5,8 @@ import org.quartz.JobDetail;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.quartz.spi.JobFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
@@ -15,7 +17,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
-import pl.iordervivi.data.scrapper.gov.covid19.job.SimpleJob;
+import pl.iordervivi.data.scrapper.gov.covid19.job.DataForCovid19StatisticWebScrapperJob;
 import pl.iordervivi.data.scrapper.gov.covid19.job.SpringJobFactory;
 
 import java.io.IOException;
@@ -23,6 +25,10 @@ import java.util.Properties;
 
 @Configuration
 public class SchedulerConfig {
+
+    private static Logger logger = LoggerFactory.getLogger(DataForCovid19StatisticWebScrapperJob.class);
+
+
     @Bean
     public JobFactory jobFactory(ApplicationContext applicationContext) {
         SpringJobFactory jobFactory = new SpringJobFactory();
@@ -37,7 +43,7 @@ public class SchedulerConfig {
         factory.setJobFactory(jobFactory);
         factory.setQuartzProperties(quartzProperties());
         factory.setTriggers(simpleJobTrigger);
-        System.out.println("starting jobs....");
+        logger.info("Scheduler starting jobs...");
         return factory;
     }
 
@@ -67,7 +73,7 @@ public class SchedulerConfig {
     @Bean
     public JobDetailFactoryBean simpleJobDetail() {
         JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
-        factoryBean.setJobClass(SimpleJob.class);
+        factoryBean.setJobClass(DataForCovid19StatisticWebScrapperJob.class);
         factoryBean.setDurability(true);
         return factoryBean;
     }
