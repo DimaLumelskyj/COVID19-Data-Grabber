@@ -25,5 +25,6 @@ public class DataProviderImpl implements DataProvider {
     @Override
     public void addSicksByRegion() {
         logger.info("Scrapping...");
+
     }
 }
