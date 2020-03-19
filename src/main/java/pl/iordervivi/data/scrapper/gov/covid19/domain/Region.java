@@ -14,15 +14,15 @@ import java.util.List;
 @Builder
 @Entity
 @EqualsAndHashCode(of = "id")
-@Table(name = "region", uniqueConstraints = @UniqueConstraint(
-        columnNames = {"id"}))
+@Table(name = "region")
 public class Region {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "region_id_seq")
     @SequenceGenerator(name = "region_id_seq", allocationSize = 1)
     private long id;
 
-    @Column(nullable = false)
+    @Column(name = "region_name", nullable = false)
     @Size(max = 256, message = "Region character limit is 256.")
     @NotBlank(message = "Region cannot be null/blank.")
     private String region;
@@ -37,4 +37,8 @@ public class Region {
     @OneToMany(mappedBy = "region", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     //@OrderBy("seatRow, seatNumber")
     private List<Sick> sicks;
+
+    public Region(String regionName) {
+        this.region = regionName;
+    }
 }

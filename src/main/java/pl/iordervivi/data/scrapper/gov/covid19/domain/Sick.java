@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Data
 @Entity
 @EqualsAndHashCode(of = "id")
 @Table(name = "sick", uniqueConstraints = @UniqueConstraint(
@@ -28,17 +29,25 @@ public class Sick {
 
     @Column(nullable = false)
     @Min(value = 0, message = "Min value is 0")
-    @NotBlank(message = "Number of sick people  on covid19 cannot be null/blank.")
-    private long numberOfCovid19SickPeople;
+    @NotNull(message = "Number of sick people  on covid19 cannot be null/blank.")
+    private long totalSickInRegion;
 
     @Column(nullable = false)
     @Min(value = 0, message = "Min value is 0")
-    @NotBlank(message = "Number of deaths from covid19 cannot be null/blank.")
-    private long numberOfCovid19Deaths;
+    @NotNull(message = "Number of deaths from covid19 cannot be null/blank.")
+    private long totalDeathsInRegion;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime addedAt;
 
     @Column(nullable = false, updatable = false)
     private long timeStep;
+
+    public Sick(long totalSickInRegion, long totalDeathsInRegion, LocalDateTime addedAt, long timeStep, Region region) {
+        setTotalSickInRegion(totalSickInRegion);
+        setTotalDeathsInRegion(totalDeathsInRegion);
+        setAddedAt(addedAt);
+        setTimeStep(timeStep);
+        setRegion(region);
+    }
 }
