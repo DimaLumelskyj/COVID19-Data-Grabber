@@ -38,21 +38,20 @@ public class SchedulerConfig {
 
     @Bean
     public SchedulerFactoryBean schedulerFactoryBean(JobFactory jobFactory,
-                                                     Trigger simpleJobTrigger) throws IOException {
+                                                     Trigger trigger) throws IOException {
         SchedulerFactoryBean factory = new SchedulerFactoryBean();
         factory.setJobFactory(jobFactory);
         factory.setQuartzProperties(quartzProperties());
-        factory.setTriggers(simpleJobTrigger);
+        factory.setTriggers(trigger);
         logger.info("Scheduler starting jobs...");
         return factory;
     }
 
     @Bean
-    public SimpleTriggerFactoryBean simpleJobTrigger(
-            @Qualifier("simpleJobDetail") JobDetail jobDetail,
+    public SimpleTriggerFactoryBean jobTrigger(
+            @Qualifier("DataForCovid19StatisticWebScrapperJobDetail") JobDetail jobDetail,
             @Value("${job.frequency}") long frequency) {
-        System.out.println("simpleJobTrigger");
-
+        logger.info("running: jobTrigger");
         SimpleTriggerFactoryBean factoryBean = new SimpleTriggerFactoryBean();
         factoryBean.setJobDetail(jobDetail);
         factoryBean.setStartDelay(0L);
@@ -71,7 +70,7 @@ public class SchedulerConfig {
     }
 
     @Bean
-    public JobDetailFactoryBean simpleJobDetail() {
+    public JobDetailFactoryBean DataForCovid19StatisticWebScrapperJobDetail() {
         JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
         factoryBean.setJobClass(DataForCovid19StatisticWebScrapperJob.class);
         factoryBean.setDurability(true);
