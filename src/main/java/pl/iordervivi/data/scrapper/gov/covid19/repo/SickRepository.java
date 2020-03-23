@@ -12,6 +12,5 @@ import java.util.Optional;
 @Repository
 public interface SickRepository extends JpaRepository<Sick, Integer> {
     Optional<Sick> findByRegionAndTimeStep(Region region, long timeStep);
-
     Optional<Sick> findTopByOrderByTimeStepDesc();
 }

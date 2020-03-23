@@ -24,10 +24,9 @@ import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
-public class SchedulerConfig {
+public class SchedulerConfiguration {
 
     private static Logger logger = LoggerFactory.getLogger(DataForCovid19StatisticWebScrapperJob.class);
-
 
     @Bean
     public JobFactory jobFactory(ApplicationContext applicationContext) {

@@ -11,6 +11,5 @@ import java.util.Optional;
 @Repository
 public interface RegionRepository extends JpaRepository<Region, Integer> {
     Optional<Region> findByRegion(String region);
-
     boolean existsByRegion(String region);
 }
