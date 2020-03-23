@@ -48,7 +48,7 @@ Lombok plugin for IDEA
 Cloning project
 
 ```
-git clone 
+git clone https://github.com/DimaLumelskyj/COVID19-Data-Grabber.git
 ```
 
 ## Deployment
