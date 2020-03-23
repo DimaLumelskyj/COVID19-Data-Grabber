@@ -75,4 +75,5 @@ mvn spring-boot:run
 
 ## Author
 * [Dmytro Lumelskyj] 
+
 Icon made by <a href="https://www.flaticon.com/authors/freepik">Freepik</a> from www.flaticon.com
