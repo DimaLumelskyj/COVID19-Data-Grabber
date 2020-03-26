@@ -65,7 +65,7 @@ These JSON before parsing should be prepared because inside a string there is ad
 The ER diagram that fits domain classes looks as follows:
 
 <a style="justify-content: center">
-<img src="ER-diagram.svg" alt="ER-DIAGRAM" width="800">
+<img src="ER-diagram.svg" alt="ER-DIAGRAM" width="350">
 </a>
 
 # Getting Started
