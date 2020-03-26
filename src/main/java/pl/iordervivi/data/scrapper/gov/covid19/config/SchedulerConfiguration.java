@@ -17,7 +17,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
-import pl.iordervivi.data.scrapper.gov.covid19.job.DataForCovid19StatisticWebScrapperJob;
+import pl.iordervivi.data.scrapper.gov.covid19.job.Covid19PolandDataScrapperJob;
 import pl.iordervivi.data.scrapper.gov.covid19.job.SpringJobFactory;
 
 import java.io.IOException;
@@ -26,7 +26,7 @@ import java.util.Properties;
 @Configuration
 public class SchedulerConfiguration {
 
-    private static Logger logger = LoggerFactory.getLogger(DataForCovid19StatisticWebScrapperJob.class);
+    private static Logger logger = LoggerFactory.getLogger(SchedulerConfiguration.class);
 
     @Bean
     public JobFactory jobFactory(ApplicationContext applicationContext) {
@@ -71,7 +71,7 @@ public class SchedulerConfiguration {
     @Bean
     public JobDetailFactoryBean DataForCovid19StatisticWebScrapperJobDetail() {
         JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
-        factoryBean.setJobClass(DataForCovid19StatisticWebScrapperJob.class);
+        factoryBean.setJobClass(Covid19PolandDataScrapperJob.class);
         factoryBean.setDurability(true);
         return factoryBean;
     }

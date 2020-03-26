@@ -14,9 +14,9 @@ import javax.transaction.Transactional;
 
 @Component
 @Transactional
-public class DataForCovid19StatisticWebScrapperJob implements Job {
+public class Covid19PolandDataScrapperJob implements Job {
     private final static String jobStarted = "Data web scrapping for covid-19 disease starting";
-    private static Logger logger = LoggerFactory.getLogger(DataForCovid19StatisticWebScrapperJob.class);
+    private static Logger logger = LoggerFactory.getLogger(Covid19PolandDataScrapperJob.class);
 
     //TODO: fix in future with static constructor and interface throw error
     @Autowired

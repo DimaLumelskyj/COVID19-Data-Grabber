@@ -18,6 +18,38 @@ Application features:
 Ministry of Health and Chief Sanitary Inspectorate data presented on 
 <a href="https://www.gov.pl/web/koronawirus/wykaz-zarazen-koronawirusem-sars-cov-2">governments website</a>.
 
+In the html source between the tag ```<pre></pre>``` there is a JSON with whole data
+inside value of the ```"parsedData"```.
+
+```
+<pre id="registerData" class="hide">
+    {
+        "description":"...",
+        "parsedData":"..JSON DATA..",
+        "fileName":"mapa_woj_1085.csv",
+        ...
+    }
+</pre>
+```
+These JSON before parsing should be prepared because inside a string there is additional backslash to remove:
+- before backslash remove 
+```
+    {
+        \"Województwo\":\"Cała Polska\",
+        \"Liczba\":\"1085\",
+        \"Liczba zgonów\":\"15\",
+        \"Id\":\"t00\"
+    }
+```
+- after cleaning 
+```
+    {
+        "Województwo":"Cała Polska",
+        "Liczba":"1085",
+        "Liczba zgonów":"15",
+        "Id":"t00"
+    }
+```
 # Description of the repository files
 - Database scripts: contains daabase creation sql and usefull query's
 - SRC\config: configuration classes to set up scheduler runner and locale  
@@ -29,7 +61,14 @@ Ministry of Health and Chief Sanitary Inspectorate data presented on
 - SRC\util: utility classes
  from 
 
-## Getting Started
+# Entity relationship diagram
+The ER diagram that fits domain classes looks as follows:
+
+<a style="justify-content: center">
+<img src="ER-diagram.svg" alt="ER-DIAGRAM" width="800">
+</a>
+
+# Getting Started
 
 That guidance will get you a copy of the project up and running on your local machine for development and experimentation purposes.
 

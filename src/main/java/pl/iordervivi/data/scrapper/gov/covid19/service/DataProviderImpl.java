@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.iordervivi.data.scrapper.gov.covid19.dto.SickInRegionsDto;
-import pl.iordervivi.data.scrapper.gov.covid19.job.DataForCovid19StatisticWebScrapperJob;
+import pl.iordervivi.data.scrapper.gov.covid19.job.Covid19PolandDataScrapperJob;
 import pl.iordervivi.data.scrapper.gov.covid19.util.ErrorHandlerUtility;
 
 import javax.transaction.Transactional;
@@ -26,7 +26,7 @@ import java.util.Optional;
 @Service("DataProviderImpl")
 @Transactional
 public class DataProviderImpl implements DataProvider {
-    private final static Logger logger = LoggerFactory.getLogger(DataForCovid19StatisticWebScrapperJob.class);
+    private final static Logger logger = LoggerFactory.getLogger(Covid19PolandDataScrapperJob.class);
     private final static ObjectMapper mapper = new ObjectMapper();
     private final RegionService regionService;
     private final SickService sickService;
