@@ -111,6 +111,26 @@ Cloning project
 git clone https://github.com/DimaLumelskyj/COVID19-Data-Grabber.git
 ```
 
+### Database and user create
+
+- Run Covid19DatabaseWithOwnerUserCreate.sql or copy and run in PSQL terminal.
+    - Use DROP option if you want clean database creation.
+
+```
+DROP DATABASE IF EXISTS covid19;
+DROP USER IF EXISTS covid19_user;
+CREATE USER covid19_user WITH PASSWORD 'user2313';
+
+CREATE DATABASE covid19
+    WITH
+    OWNER = covid19_user
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'pl_PL.utf8' --alternatively 'pl_PL' or 'pl_PL.utf8' if on Linux
+    LC_CTYPE = 'pl_PL.utf8' --alternatively 'pl_PL' or 'pl_PL.utf8' if on Linux
+    TEMPLATE = template0
+    CONNECTION LIMIT = 5000;
+```
+
 ## Deployment
 
 This Spring Boot application can be started in a few ways
@@ -129,6 +149,23 @@ mvn clean package && java -jar target/covid19-0.0.1-SNAPSHOT.jar
 Using Maven Spring Boot plugin
 ```
 mvn spring-boot:run
+```
+
+## SQL queries and backup data
+DataFromDatabase folder contains backup data from the database.
+If you want merge tables please run following query:
+
+```
+SELECT public.sick.id,
+       public.sick.added_at,
+       public.sick.time_step,
+       public.sick.total_deaths_in_region,
+       public.sick.total_sick_in_region,
+       public.region.id,
+       public.region.region_name
+FROM public.sick
+         LEFT JOIN public.region
+                   ON public.sick.region_id = public.region.id;
 ```
 
 ## Author
