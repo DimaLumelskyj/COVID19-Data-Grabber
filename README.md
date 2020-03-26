@@ -51,7 +51,7 @@ These JSON before parsing should be prepared because inside a string there is ad
     }
 ```
 # Description of the repository files
-- Database scripts: contains daabase creation sql and usefull query's
+- Database scripts: contains database creation sql and useful query's
 - SRC\config: configuration classes to set up scheduler runner and locale  
 - SRC\domain: domain classes
 - SRC\dto: dto mapping class
@@ -64,9 +64,7 @@ These JSON before parsing should be prepared because inside a string there is ad
 # Entity relationship diagram
 The ER diagram that fits domain classes looks as follows:
 
-<a style="justify-content: center">
-<img src="ER-diagram.svg" alt="ER-DIAGRAM" width="350">
-</a>
+<img src="ER-diagram.svg" alt="ER-DIAGRAM" class="display: block; margin-left: auto; margin-right: auto; width: 25%;">
 
 # Getting Started
 
