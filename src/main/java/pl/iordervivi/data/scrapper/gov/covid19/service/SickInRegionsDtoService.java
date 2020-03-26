@@ -6,7 +6,7 @@ import pl.iordervivi.data.scrapper.gov.covid19.dto.SickInRegionsDto;
 import java.util.List;
 import java.util.Optional;
 
-@Service("")
+@Service
 public class SickInRegionsDtoService {
     Optional<SickInRegionsDto> ifExistsTotalSickEntryInRegionDtoObjectList(List<SickInRegionsDto> sickInRegionsDtoList) {
         for (SickInRegionsDto sickInRegionsDTO : sickInRegionsDtoList) {
