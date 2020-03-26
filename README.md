@@ -64,7 +64,7 @@ These JSON before parsing should be prepared because inside a string there is ad
 # Entity relationship diagram
 The ER diagram that fits domain classes looks as follows:
 
-<img src="ER-diagram.svg" alt="ER-DIAGRAM" class="width: 25%; text-align:center;">
+<img src="ER-diagram.svg" alt="ER-DIAGRAM" class="width: 25%;">
 
 # Getting Started
 
