@@ -1,21 +1,19 @@
 package pl.iordervivi.data.scrapper.gov.covid19.config;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 
 @Configuration
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class LocaleConfiguration {
 
-    private final Environment env;
+    private final ApplicationProperties applicationProperties;
 
     @PostConstruct
     public void init() {
-        String timezone = env.getProperty("application.timezone");
-        TimeZone.setDefault(TimeZone.getTimeZone(timezone));
+        TimeZone.setDefault(TimeZone.getTimeZone(applicationProperties.getApplicationTimezone()));
     }
 }

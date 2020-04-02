@@ -1,14 +1,13 @@
 package pl.iordervivi.data.scrapper.gov.covid19.config;
 
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.quartz.JobDetail;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.quartz.spi.JobFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -24,9 +23,9 @@ import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
+@Log
+@RequiredArgsConstructor
 public class SchedulerConfiguration {
-
-    private static Logger logger = LoggerFactory.getLogger(SchedulerConfiguration.class);
 
     @Bean
     public JobFactory jobFactory(ApplicationContext applicationContext) {
@@ -42,19 +41,18 @@ public class SchedulerConfiguration {
         factory.setJobFactory(jobFactory);
         factory.setQuartzProperties(quartzProperties());
         factory.setTriggers(trigger);
-        logger.info("Scheduler starting jobs...");
+        log.info("Scheduler starting jobs:");
         return factory;
     }
 
     @Bean
     public SimpleTriggerFactoryBean jobTrigger(
-            @Qualifier("DataForCovid19StatisticWebScrapperJobDetail") JobDetail jobDetail,
-            @Value("${job.frequency}") long frequency) {
-        logger.info("running: jobTrigger");
+            @Qualifier("DataForCovid19StatisticWebScrapperJobDetail") JobDetail jobDetail, ApplicationProperties applicationProperties) {
+        log.info("running: jobTrigger");
         SimpleTriggerFactoryBean factoryBean = new SimpleTriggerFactoryBean();
         factoryBean.setJobDetail(jobDetail);
         factoryBean.setStartDelay(0L);
-        factoryBean.setRepeatInterval(frequency);
+        factoryBean.setRepeatInterval(applicationProperties.getFrequencyInMilliseconds());
         factoryBean.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
         return factoryBean;
     }
