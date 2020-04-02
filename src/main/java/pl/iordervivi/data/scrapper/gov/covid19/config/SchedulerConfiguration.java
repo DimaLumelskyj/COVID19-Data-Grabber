@@ -40,14 +40,15 @@ public class SchedulerConfiguration {
         factory.setJobFactory(jobFactory);
         factory.setQuartzProperties(quartzProperties());
         factory.setTriggers(trigger);
-        log.info("Scheduler starting jobs:");
+        log.info(LogResourceText.JOB_SCHEDULER_STARTED);
         return factory;
     }
 
     @Bean
     public SimpleTriggerFactoryBean jobTrigger(
-            JobDetail jobDetail, ApplicationProperties applicationProperties) {
-        log.info("running: jobTrigger");
+            JobDetail jobDetail,
+            ApplicationProperties applicationProperties) {
+        log.info(LogResourceText.JOB_TRIGGER_STARTED);
         SimpleTriggerFactoryBean factoryBean = new SimpleTriggerFactoryBean();
         factoryBean.setJobDetail(jobDetail);
         factoryBean.setStartDelay(0L);
@@ -66,7 +67,7 @@ public class SchedulerConfiguration {
     }
 
     @Bean
-    public JobDetailFactoryBean dataForCovid19StatistkicWebScrapperJobDetail() {
+    public JobDetailFactoryBean dataForCaved19StatisticWebScrapperJobDetail() {
         JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
         factoryBean.setJobClass(Covid19PolandDataScrapperJob.class);
         factoryBean.setDurability(true);

@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-@Service("DataProviderImpl")
+@Service
 @Transactional
 public class DataProviderImpl implements DataProvider {
     private final static Logger logger = LoggerFactory.getLogger(Covid19PolandDataScrapperJob.class);
