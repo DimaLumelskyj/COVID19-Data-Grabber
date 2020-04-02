@@ -37,7 +37,7 @@ public class DataProviderImpl implements DataProvider {
 
 
     @Override
-    public void addSicksByRegion() {
+    public void addDiseaseStatisticByRegions() {
         log.info(LogResourceText.DATA_SCRAPPING_STARTED);
         try {
             long step = sickService.getCurrentStep();

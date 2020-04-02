@@ -18,6 +18,6 @@ public class Covid19PolandDataScrapperJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
         log.info(LogResourceText.WEB_SCRAPPING_STARTED);
-        dataProvider.addSicksByRegion();
+        dataProvider.addDiseaseStatisticByRegions();
     }
 }
