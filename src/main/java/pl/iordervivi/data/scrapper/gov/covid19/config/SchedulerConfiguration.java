@@ -2,7 +2,7 @@ package pl.iordervivi.data.scrapper.gov.covid19.config;
 
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobDetail;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
-@Log
+@Slf4j
 @RequiredArgsConstructor
 public class SchedulerConfiguration {
 
