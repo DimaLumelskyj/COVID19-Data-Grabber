@@ -7,7 +7,6 @@ import org.quartz.JobDetail;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.quartz.spi.JobFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -47,7 +46,7 @@ public class SchedulerConfiguration {
 
     @Bean
     public SimpleTriggerFactoryBean jobTrigger(
-            @Qualifier("DataForCovid19StatisticWebScrapperJobDetail") JobDetail jobDetail, ApplicationProperties applicationProperties) {
+            JobDetail jobDetail, ApplicationProperties applicationProperties) {
         log.info("running: jobTrigger");
         SimpleTriggerFactoryBean factoryBean = new SimpleTriggerFactoryBean();
         factoryBean.setJobDetail(jobDetail);
@@ -67,7 +66,7 @@ public class SchedulerConfiguration {
     }
 
     @Bean
-    public JobDetailFactoryBean DataForCovid19StatisticWebScrapperJobDetail() {
+    public JobDetailFactoryBean dataForCovid19StatistkicWebScrapperJobDetail() {
         JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
         factoryBean.setJobClass(Covid19PolandDataScrapperJob.class);
         factoryBean.setDurability(true);
