@@ -1,17 +1,13 @@
 package pl.iordervivi.data.scrapper.gov.covid19.domain;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Data
 @Entity
 @EqualsAndHashCode(of = "id")
@@ -43,7 +39,11 @@ public class Sick {
     @Column(nullable = false, updatable = false)
     private long timeStep;
 
-    public Sick(long totalSickInRegion, long totalDeathsInRegion, LocalDateTime addedAt, long timeStep, Region region) {
+    public Sick(long totalSickInRegion,
+                long totalDeathsInRegion,
+                LocalDateTime addedAt,
+                long timeStep,
+                Region region) {
         setTotalSickInRegion(totalSickInRegion);
         setTotalDeathsInRegion(totalDeathsInRegion);
         setAddedAt(addedAt);
