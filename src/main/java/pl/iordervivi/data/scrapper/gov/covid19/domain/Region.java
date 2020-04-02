@@ -27,15 +27,7 @@ public class Region {
     @NotBlank(message = "Region cannot be null/blank.")
     private String region;
 
-    /*
-    @Column(nullable = false)
-    @Size(max = 256, message = "County character limit is 256.")
-    @NotBlank(message = "County cannot be null/blank.")
-    private String county;
-    */
-
     @OneToMany(mappedBy = "region", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    //@OrderBy("seatRow, seatNumber")
     private List<Sick> sicks;
 
     public Region(String regionName) {
