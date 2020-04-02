@@ -2,6 +2,7 @@ package pl.iordervivi.data.scrapper.gov.covid19.domain;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -9,10 +10,11 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
+@RequiredArgsConstructor
 @Entity
 @EqualsAndHashCode(of = "id")
-@Table(name = "sick", uniqueConstraints = @UniqueConstraint(
-        columnNames = {"id"}))
+@Table(name = "sick",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"id"}))
 public class Sick {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sick_id_seq")

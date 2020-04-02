@@ -67,10 +67,19 @@ public class DataProviderImpl implements DataProvider {
         Element formElement = document.select("pre").first();
         String jsonData = StringUtils.substringBetween(formElement.toString(), "\"parsedData\":\"", "\",\"fileName\"");
         jsonData = StringUtils.remove(jsonData, "\\");
+        jsonData = internationalizeJsonData(jsonData);
         DeserializationProblemHandler deserializationProblemHandler = new ErrorHandlerUtility.UnMarshallingErrorHandler();
         mapper.addHandler(deserializationProblemHandler);
         CollectionType typeReference =
                 TypeFactory.defaultInstance().constructCollectionType(List.class, SickInRegionsDto.class);
         return mapper.readValue(jsonData, typeReference);
     }
+
+    private String internationalizeJsonData(String jsonData) {
+        jsonData = jsonData.replace("Województwo", "region");
+        jsonData = jsonData.replace("Liczba", "sick");
+        jsonData = jsonData.replace("sick zgonów", "deaths");
+        return jsonData;
+    }
+
 }

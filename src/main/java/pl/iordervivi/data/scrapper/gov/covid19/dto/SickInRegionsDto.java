@@ -5,13 +5,13 @@ import lombok.Data;
 
 @Data
 public class SickInRegionsDto {
-    @JsonProperty("Województwo")
+    @JsonProperty("region")
     private String regionName;
 
-    @JsonProperty("Liczba")
+    @JsonProperty("sick")
     private Long totalSickInRegion;
 
-    @JsonProperty("Liczba zgonów")
+    @JsonProperty("deaths")
     private Long totalDeathsInRegion;
 
     @JsonProperty("Id")

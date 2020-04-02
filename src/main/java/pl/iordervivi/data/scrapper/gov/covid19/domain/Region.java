@@ -2,6 +2,7 @@ package pl.iordervivi.data.scrapper.gov.covid19.domain;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -9,6 +10,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
+@RequiredArgsConstructor
 @Entity
 @EqualsAndHashCode(of = "id")
 @Table(name = "region")
