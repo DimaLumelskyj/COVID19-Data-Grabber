@@ -44,10 +44,10 @@ public class Sick {
                 LocalDateTime addedAt,
                 long timeStep,
                 Region region) {
-        setTotalSickInRegion(totalSickInRegion);
-        setTotalDeathsInRegion(totalDeathsInRegion);
-        setAddedAt(addedAt);
-        setTimeStep(timeStep);
-        setRegion(region);
+        this.totalSickInRegion = totalSickInRegion;
+        this.totalDeathsInRegion = totalDeathsInRegion;
+        this.addedAt = addedAt;
+        this.timeStep = timeStep;
+        this.region = region;
     }
 }
