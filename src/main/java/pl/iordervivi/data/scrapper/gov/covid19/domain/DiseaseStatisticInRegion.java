@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of = "id")
 @Table(name = "sick",
         uniqueConstraints = @UniqueConstraint(columnNames = {"id"}))
-public class Sick {
+public class DiseaseStatisticInRegion {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sick_id_seq")
     @SequenceGenerator(name = "sick_id_seq", allocationSize = 1)
@@ -25,12 +25,12 @@ public class Sick {
     @JoinColumn(foreignKey = @ForeignKey(name = "region_id_fkey"))
     private Region region;
 
-    @Column(nullable = false)
+    @Column(name = "total_sick_in_region", nullable = false)
     @Min(value = 0, message = "Min value is 0")
     @NotNull(message = "Number of sick people  on covid19 cannot be null/blank.")
-    private long totalSickInRegion;
+    private long totalDiseaseCasesInRegion;
 
-    @Column(nullable = false)
+    @Column(name = "total_deaths_in_region", nullable = false)
     @Min(value = 0, message = "Min value is 0")
     @NotNull(message = "Number of deaths from covid19 cannot be null/blank.")
     private long totalDeathsInRegion;
@@ -41,12 +41,12 @@ public class Sick {
     @Column(nullable = false, updatable = false)
     private long timeStep;
 
-    public Sick(long totalSickInRegion,
-                long totalDeathsInRegion,
-                LocalDateTime addedAt,
-                long timeStep,
-                Region region) {
-        this.totalSickInRegion = totalSickInRegion;
+    public DiseaseStatisticInRegion(long totalSickInRegion,
+                                    long totalDeathsInRegion,
+                                    LocalDateTime addedAt,
+                                    long timeStep,
+                                    Region region) {
+        this.totalDiseaseCasesInRegion = totalSickInRegion;
         this.totalDeathsInRegion = totalDeathsInRegion;
         this.addedAt = addedAt;
         this.timeStep = timeStep;

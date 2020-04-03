@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class SickInRegionsDto {
+public class DiseaseStatisticInRegionDto {
     @JsonProperty("region")
     private String regionName;
 

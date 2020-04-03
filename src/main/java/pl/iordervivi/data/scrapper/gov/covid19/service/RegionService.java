@@ -2,7 +2,7 @@ package pl.iordervivi.data.scrapper.gov.covid19.service;
 
 import org.springframework.stereotype.Service;
 import pl.iordervivi.data.scrapper.gov.covid19.domain.Region;
-import pl.iordervivi.data.scrapper.gov.covid19.dto.SickInRegionsDto;
+import pl.iordervivi.data.scrapper.gov.covid19.dto.DiseaseStatisticInRegionDto;
 import pl.iordervivi.data.scrapper.gov.covid19.repo.RegionRepository;
 
 import java.util.List;
@@ -15,10 +15,10 @@ public class RegionService {
         this.regionRepository = regionRepository;
     }
 
-    void addRegions(List<SickInRegionsDto> sickInRegionsDtos) {
-        for (SickInRegionsDto sickInRegionsDTO : sickInRegionsDtos) {
-            if (!regionRepository.existsByRegion(sickInRegionsDTO.getRegionName())) {
-                regionRepository.save(new Region(sickInRegionsDTO.getRegionName()));
+    void addRegions(List<DiseaseStatisticInRegionDto> DiseaseStatisticInRegionsDto) {
+        for (DiseaseStatisticInRegionDto DiseaseStatisticInRegionDTO : DiseaseStatisticInRegionsDto) {
+            if (!regionRepository.existsByRegion(DiseaseStatisticInRegionDTO.getRegionName())) {
+                regionRepository.save(new Region(DiseaseStatisticInRegionDTO.getRegionName()));
             }
         }
     }

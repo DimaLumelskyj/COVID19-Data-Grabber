@@ -12,4 +12,8 @@ public class LogResourceText {
    public final static String DATA_SCRAPPING_STARTED = "Scrapping...";
    public final static String DATA_SCRAPPING_SAME_DATA = "There is the same data in previous step so not adding to the database";
    public final static String DATA_SCRAPPING_COMPLETE = "Parsing complete";
+   public final static String DATA_SCRAPPING_NULL_WEB_PAGE_CONTENT = "getDiseaseStatisticInRegions()-> var document is null after loading from WEB, possibly this web page doesnt exists any more, needs new data provider";
+   public final static String DATA_SCRAPPING_NULL_DTO_LIST = "List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions can't be empty";
+   public final static String DATA_SCRAPPING_NULL_OBJECT = "Object can't be empty:";
 }
+

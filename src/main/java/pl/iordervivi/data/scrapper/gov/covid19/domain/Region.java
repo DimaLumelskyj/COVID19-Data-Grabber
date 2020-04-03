@@ -27,7 +27,7 @@ public class Region {
     private String region;
 
     @OneToMany(mappedBy = "region", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<Sick> sicks;
+    private List<DiseaseStatisticInRegion> diseasesStatisticInRegion;
 
     public Region(String regionName) {
         this.region = regionName;

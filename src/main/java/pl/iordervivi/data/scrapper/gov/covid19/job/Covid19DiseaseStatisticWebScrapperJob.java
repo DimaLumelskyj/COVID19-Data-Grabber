@@ -10,7 +10,7 @@ import pl.iordervivi.data.scrapper.gov.covid19.service.DataProvider;
 
 @Component
 @Slf4j
-public class Covid19PolandDataScrapperJob implements Job {
+public class Covid19DiseaseStatisticWebScrapperJob implements Job {
 
     @Autowired
     private DataProvider dataProvider;
