@@ -12,8 +12,12 @@ import pl.iordervivi.data.scrapper.gov.covid19.service.DataProvider;
 @Slf4j
 public class Covid19DiseaseStatisticWebScrapperJob implements Job {
 
-    @Autowired
     private DataProvider dataProvider;
+
+    @Autowired
+    public void setDataProvider(DataProvider dataProvider) {
+        this.dataProvider = dataProvider;
+    }
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
