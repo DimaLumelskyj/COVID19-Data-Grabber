@@ -1,5 +1,6 @@
 package pl.iordervivi.data.scrapper.gov.covid19.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.iordervivi.data.scrapper.gov.covid19.config.LogResourceText;
 import pl.iordervivi.data.scrapper.gov.covid19.domain.DiseaseStatisticInRegion;
@@ -13,15 +14,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class DiseaseStatisticInRegionService {
     private final DiseaseStatisticInRegionRepository diseaseStatisticInRegionRepository;
     private final RegionRepository regionRepository;
 
-    public DiseaseStatisticInRegionService(DiseaseStatisticInRegionRepository diseaseStatisticInRegionRepository,
-                                           RegionRepository regionRepository) {
-        this.diseaseStatisticInRegionRepository = diseaseStatisticInRegionRepository;
-        this.regionRepository = regionRepository;
-    }
 
     void addSick(List<DiseaseStatisticInRegionDto> diseaseStatisticInRegionDtoList,
                  LocalDateTime now,
