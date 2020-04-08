@@ -146,10 +146,10 @@ class DiseaseStatisticInRegionServiceTest {
         DiseaseStatisticInRegionDto totalDiseaseStatisticInRegionDto = new DiseaseStatisticInRegionDto();
         DiseaseStatisticInRegion diseaseStatisticInRegion = new DiseaseStatisticInRegion();
         Region region = new Region();
-        totalDiseaseStatisticInRegionDto.setTotalSickInRegion(diseases);
-        totalDiseaseStatisticInRegionDto.setTotalDeathsInRegion(deaths);
+        totalDiseaseStatisticInRegionDto.setTotalDiseaseCasesInRegion(diseases);
+        totalDiseaseStatisticInRegionDto.setTotalDeathCasesInRegion(deaths);
         diseaseStatisticInRegion.setTotalDiseaseCasesInRegion(diseases);
-        diseaseStatisticInRegion.setTotalDeathsInRegion(deaths);
+        diseaseStatisticInRegion.setTotalDeathCasesInRegion(deaths);
         region.setRegion("Cała Polska");
         when(regionRepository.findByRegion("Cała Polska")).thenReturn(Optional.of(region));
         when(diseaseStatisticInRegionRepository.findByRegionAndTimeStep(region, 1))
@@ -175,10 +175,10 @@ class DiseaseStatisticInRegionServiceTest {
         DiseaseStatisticInRegionDto totalDiseaseStatisticInRegionDto = new DiseaseStatisticInRegionDto();
         DiseaseStatisticInRegion diseaseStatisticInRegion = new DiseaseStatisticInRegion();
         Region region = new Region();
-        totalDiseaseStatisticInRegionDto.setTotalSickInRegion(diseasesDto);
-        totalDiseaseStatisticInRegionDto.setTotalDeathsInRegion(deathsDto);
+        totalDiseaseStatisticInRegionDto.setTotalDiseaseCasesInRegion(diseasesDto);
+        totalDiseaseStatisticInRegionDto.setTotalDeathCasesInRegion(deathsDto);
         diseaseStatisticInRegion.setTotalDiseaseCasesInRegion(diseases);
-        diseaseStatisticInRegion.setTotalDeathsInRegion(deaths);
+        diseaseStatisticInRegion.setTotalDeathCasesInRegion(deaths);
         region.setRegion("Cała Polska");
         when(regionRepository.findByRegion("Cała Polska")).thenReturn(Optional.of(region));
         when(diseaseStatisticInRegionRepository.findByRegionAndTimeStep(region, 1))

@@ -13,10 +13,10 @@ public class DiseaseStatisticInRegionDto {
     private String regionName;
 
     @JsonProperty("sick")
-    private Long totalSickInRegion;
+    private Long totalDiseaseCasesInRegion = 0L;
 
     @JsonProperty("deaths")
-    private Long totalDeathsInRegion;
+    private Long totalDeathCasesInRegion = 0L;
 
     @JsonProperty("Id")
     private String id;

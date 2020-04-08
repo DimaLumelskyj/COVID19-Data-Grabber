@@ -24,17 +24,17 @@ public class DiseaseStatisticInRegionService {
                  LocalDateTime now,
                  long step) {
         for (DiseaseStatisticInRegionDto diseaseStatisticInRegionDto : diseaseStatisticInRegionDtoList) {
+
             Optional<Region> region = regionRepository.findByRegion(diseaseStatisticInRegionDto.getRegionName());
+
             if (region.isEmpty()) {
                 String er = "Region not found in DB during adding sick data to the database: " + diseaseStatisticInRegionDto.getRegionName();
                 throw new IllegalArgumentException(er);
             }
-            long sick = 0;
-            if (diseaseStatisticInRegionDto.getTotalSickInRegion() != null)
-                sick = diseaseStatisticInRegionDto.getTotalSickInRegion();
-            long death = 0;
-            if (diseaseStatisticInRegionDto.getTotalDeathsInRegion() != null)
-                death = diseaseStatisticInRegionDto.getTotalDeathsInRegion();
+
+            long sick = diseaseStatisticInRegionDto.getTotalDiseaseCasesInRegion();
+            long death = diseaseStatisticInRegionDto.getTotalDeathCasesInRegion();
+
             diseaseStatisticInRegionRepository.save(new DiseaseStatisticInRegion(sick, death, now, step, region.get()));
         }
     }
@@ -70,7 +70,7 @@ public class DiseaseStatisticInRegionService {
         }
 
         DiseaseStatisticInRegion diseaseStatisticInRegion = diseaseStatisticInRegionOptional.get();
-        return diseaseStatisticInRegion.getTotalDiseaseCasesInRegion() == totalDiseaseStatisticInRegionDto.getTotalSickInRegion() &&
-                diseaseStatisticInRegion.getTotalDeathsInRegion() == totalDiseaseStatisticInRegionDto.getTotalDeathsInRegion();
+        return diseaseStatisticInRegion.getTotalDiseaseCasesInRegion() == totalDiseaseStatisticInRegionDto.getTotalDiseaseCasesInRegion() &&
+                diseaseStatisticInRegion.getTotalDeathCasesInRegion() == totalDiseaseStatisticInRegionDto.getTotalDeathCasesInRegion();
     }
 }
