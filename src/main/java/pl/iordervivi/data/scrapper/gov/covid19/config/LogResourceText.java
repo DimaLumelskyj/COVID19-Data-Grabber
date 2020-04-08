@@ -16,5 +16,6 @@ public class LogResourceText {
     public final static String DATA_SCRAPPING_NULL_DTO_LIST = "List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions can't be empty or have null elements";
     public final static String DATA_SCRAPPING_NULL_OBJECT = "Object can't be empty:";
     public final static String DATA_SCRAPPING_REGION_NOT_FOUND = "Region name not valid, possibly data provider not working or change data format";
+    public static final String DATA_SCRAPPING_JSON_MM_ERROR = "Json model mapper processing error: ";
 }
 

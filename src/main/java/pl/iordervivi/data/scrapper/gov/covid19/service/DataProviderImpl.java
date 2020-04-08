@@ -1,8 +1,6 @@
 package pl.iordervivi.data.scrapper.gov.covid19.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.deser.DeserializationProblemHandler;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +12,8 @@ import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Service;
 import pl.iordervivi.data.scrapper.gov.covid19.config.ApplicationProperties;
 import pl.iordervivi.data.scrapper.gov.covid19.config.LogResourceText;
+import pl.iordervivi.data.scrapper.gov.covid19.config.ModelMapperConfiguration;
 import pl.iordervivi.data.scrapper.gov.covid19.dto.DiseaseStatisticInRegionDto;
-import pl.iordervivi.data.scrapper.gov.covid19.util.UnMarshallingErrorHandler;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
@@ -30,7 +28,8 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 public class DataProviderImpl implements DataProvider {
-    private final ObjectMapper mapper = new ObjectMapper();
+
+    private final ModelMapperConfiguration modelMapper;
     private final ApplicationProperties applicationProperties;
     private final RegionService regionService;
     private final DiseaseStatisticInRegionService diseaseStatisticInRegionService;
@@ -93,22 +92,21 @@ public class DataProviderImpl implements DataProvider {
     }
 
     List<DiseaseStatisticInRegionDto> getDiseaseStatisticInRegions() {
-        String jsonData = internationalizeJsonData(webScrapper());
-        DeserializationProblemHandler deserializationProblemHandler = new UnMarshallingErrorHandler();
-        mapper.addHandler(deserializationProblemHandler);
+        String jsonData = internationalizeJsonData(webScrapperRun());
         CollectionType typeReference = TypeFactory
                 .defaultInstance()
                 .constructCollectionType(List.class,
                         DiseaseStatisticInRegionDto.class);
         try {
-            return mapper.readValue(jsonData, typeReference);
+            return modelMapper.getMapper().readValue(jsonData, typeReference);
         } catch (JsonProcessingException e) {
+            log.error(LogResourceText.DATA_SCRAPPING_JSON_MM_ERROR);
             e.printStackTrace();
         }
         return Collections.emptyList();
     }
 
-    String webScrapper() {
+    String webScrapperRun() {
         Document document = null;
         try {
             document = Jsoup.connect(applicationProperties.getDataProviderUrl()).get();

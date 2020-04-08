@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 import pl.iordervivi.data.scrapper.gov.covid19.config.ApplicationProperties;
+import pl.iordervivi.data.scrapper.gov.covid19.config.ModelMapperConfiguration;
 import pl.iordervivi.data.scrapper.gov.covid19.dto.DiseaseStatisticInRegionDto;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ class DataProviderImplTest {
     private DataProviderImpl dataProvider;
     @InjectMocks
     private ApplicationProperties applicationProperties = new ApplicationProperties();
+    private ModelMapperConfiguration modelMapper = new ModelMapperConfiguration();
 
     @BeforeEach
     void initData() {
@@ -42,7 +44,8 @@ class DataProviderImplTest {
                 "dataProviderUrl",
                 dataProviderUrl);
 
-        dataProvider = new DataProviderImpl(applicationProperties,
+        dataProvider = new DataProviderImpl(modelMapper,
+                applicationProperties,
                 null,
                 null);
     }
