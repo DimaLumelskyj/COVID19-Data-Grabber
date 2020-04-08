@@ -17,12 +17,15 @@ public class DiseaseStatisticInRegionService {
     private final DiseaseStatisticInRegionRepository diseaseStatisticInRegionRepository;
     private final RegionRepository regionRepository;
 
-    public DiseaseStatisticInRegionService(DiseaseStatisticInRegionRepository diseaseStatisticInRegionRepository, RegionRepository regionRepository) {
+    public DiseaseStatisticInRegionService(DiseaseStatisticInRegionRepository diseaseStatisticInRegionRepository,
+                                           RegionRepository regionRepository) {
         this.diseaseStatisticInRegionRepository = diseaseStatisticInRegionRepository;
         this.regionRepository = regionRepository;
     }
 
-    void addSick(List<DiseaseStatisticInRegionDto> DiseaseStatisticInRegionDtos, LocalDateTime now, long step) {
+    void addSick(List<DiseaseStatisticInRegionDto> DiseaseStatisticInRegionDtos,
+                 LocalDateTime now,
+                 long step) {
         for (DiseaseStatisticInRegionDto DiseaseStatisticInRegionDTO : DiseaseStatisticInRegionDtos) {
             Optional<Region> region = regionRepository.findByRegion(DiseaseStatisticInRegionDTO.getRegionName());
             if (region.isEmpty()) {

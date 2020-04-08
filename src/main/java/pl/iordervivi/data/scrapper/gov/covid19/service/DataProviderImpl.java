@@ -41,6 +41,9 @@ public class DataProviderImpl implements DataProvider {
         long step = diseaseStatisticInRegionService.getCurrentStep();
         List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions = getDiseaseStatisticInRegions();
 
+        if (validateDiseaseStatisticInRegions(diseaseStatisticInRegions))
+            log.trace("Dto list validation successful");
+
         if (!checkIfThereIsNewData(diseaseStatisticInRegions, step)) {
             log.info(LogResourceText.DATA_SCRAPPING_SAME_DATA);
             return;
@@ -53,17 +56,43 @@ public class DataProviderImpl implements DataProvider {
         log.info(LogResourceText.DATA_SCRAPPING_COMPLETE);
     }
 
-    private boolean checkIfThereIsNewData(List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions, long step) {
-        if (diseaseStatisticInRegions.isEmpty()) {
+    boolean validateDiseaseStatisticInRegions(List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions) {
+        if (diseaseStatisticInRegions == null ||
+                diseaseStatisticInRegions.size() !=
+                        applicationProperties.getTOTAL_NUMBER_OF_REGIONS_IN_POLAND_WITH_WHOLE_COUNTRY()) {
             throw new IllegalArgumentException(LogResourceText.DATA_SCRAPPING_NULL_DTO_LIST);
         }
+        for (DiseaseStatisticInRegionDto diseaseStatisticInRegion : diseaseStatisticInRegions) {
+            if (diseaseStatisticInRegion == null) {
+                throw new IllegalArgumentException(LogResourceText.DATA_SCRAPPING_NULL_DTO_LIST);
+            }
+        }
+        for (String regionName : applicationProperties.getREGION_NAME_VALIDATION_SET()) {
+            if (!checkIfRegionNameIsInSet(diseaseStatisticInRegions, regionName)) {
+                throw new IllegalArgumentException(LogResourceText.DATA_SCRAPPING_REGION_NOT_FOUND);
+            }
+        }
+        return true;
+    }
+
+    boolean checkIfRegionNameIsInSet(List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions,
+                                     String regionName) {
+        for (DiseaseStatisticInRegionDto diseaseStatisticInRegion : diseaseStatisticInRegions) {
+            if (diseaseStatisticInRegion.getRegionName().equals(regionName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    boolean checkIfThereIsNewData(List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions, long step) {
         Optional<DiseaseStatisticInRegionDto> totalSickInRegionsDto =
-                ifExistsTotalDiseaseStatisticEntryInRegionDtpObjectList(diseaseStatisticInRegions);
+                getTotalCountryDiseaseStatisticEntry(diseaseStatisticInRegions);
         return step <= 1 || totalSickInRegionsDto.isEmpty()
                 || !diseaseStatisticInRegionService.ifSameDataInPreviousStep(totalSickInRegionsDto.get(), step);
     }
 
-    private List<DiseaseStatisticInRegionDto> getDiseaseStatisticInRegions() {
+    List<DiseaseStatisticInRegionDto> getDiseaseStatisticInRegions() {
         String jsonData = internationalizeJsonData(webScrapper());
         DeserializationProblemHandler deserializationProblemHandler = new UnMarshallingErrorHandler();
         mapper.addHandler(deserializationProblemHandler);
@@ -79,7 +108,7 @@ public class DataProviderImpl implements DataProvider {
         return Collections.emptyList();
     }
 
-    private String webScrapper() {
+    String webScrapper() {
         Document document = null;
         try {
             document = Jsoup.connect(applicationProperties.getDataProviderUrl()).get();
@@ -91,20 +120,24 @@ public class DataProviderImpl implements DataProvider {
             throw new IllegalArgumentException(LogResourceText.DATA_SCRAPPING_NULL_WEB_PAGE_CONTENT);
         }
         Element formElement = document.select("pre").first();
-        String jsonData = StringUtils.substringBetween(formElement.toString(), "\"parsedData\":\"", "\",\"fileName\"");
+        String jsonData = StringUtils.substringBetween(formElement.toString(),
+                "\"parsedData\":\"",
+                "\",\"fileName\"");
         return StringUtils.remove(jsonData, "\\");
     }
 
-    private String internationalizeJsonData(String jsonData) {
+    String internationalizeJsonData(String jsonData) {
         jsonData = jsonData.replace("Województwo", "region");
         jsonData = jsonData.replace("Liczba", "sick");
         jsonData = jsonData.replace("sick zgonów", "deaths");
         return jsonData;
     }
 
-    Optional<DiseaseStatisticInRegionDto> ifExistsTotalDiseaseStatisticEntryInRegionDtpObjectList(List<DiseaseStatisticInRegionDto> DiseaseStatisticInRegionDtoList) {
-        for (DiseaseStatisticInRegionDto DiseaseStatisticInRegionDTO : DiseaseStatisticInRegionDtoList) {
-            if (DiseaseStatisticInRegionDTO.getRegionName().equals("Cała Polska")) {
+    Optional<DiseaseStatisticInRegionDto> getTotalCountryDiseaseStatisticEntry(
+            List<DiseaseStatisticInRegionDto> diseaseStatisticInRegionDtoList) {
+        for (DiseaseStatisticInRegionDto DiseaseStatisticInRegionDTO : diseaseStatisticInRegionDtoList) {
+            if (DiseaseStatisticInRegionDTO.getRegionName()
+                    .equals(applicationProperties.getREGION_NAME_VALIDATION_SET()[0])) {
                 return Optional.of(DiseaseStatisticInRegionDTO);
             }
         }
