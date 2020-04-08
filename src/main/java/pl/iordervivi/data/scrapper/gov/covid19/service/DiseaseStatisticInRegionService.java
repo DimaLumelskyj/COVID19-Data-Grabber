@@ -23,21 +23,21 @@ public class DiseaseStatisticInRegionService {
         this.regionRepository = regionRepository;
     }
 
-    void addSick(List<DiseaseStatisticInRegionDto> DiseaseStatisticInRegionDtos,
+    void addSick(List<DiseaseStatisticInRegionDto> diseaseStatisticInRegionDtoList,
                  LocalDateTime now,
                  long step) {
-        for (DiseaseStatisticInRegionDto DiseaseStatisticInRegionDTO : DiseaseStatisticInRegionDtos) {
-            Optional<Region> region = regionRepository.findByRegion(DiseaseStatisticInRegionDTO.getRegionName());
+        for (DiseaseStatisticInRegionDto diseaseStatisticInRegionDto : diseaseStatisticInRegionDtoList) {
+            Optional<Region> region = regionRepository.findByRegion(diseaseStatisticInRegionDto.getRegionName());
             if (region.isEmpty()) {
-                String er = "Region not found in DB during adding sick data to the database: " + DiseaseStatisticInRegionDTO.getRegionName();
+                String er = "Region not found in DB during adding sick data to the database: " + diseaseStatisticInRegionDto.getRegionName();
                 throw new IllegalArgumentException(er);
             }
             long sick = 0;
-            if (DiseaseStatisticInRegionDTO.getTotalSickInRegion() != null)
-                sick = DiseaseStatisticInRegionDTO.getTotalSickInRegion();
+            if (diseaseStatisticInRegionDto.getTotalSickInRegion() != null)
+                sick = diseaseStatisticInRegionDto.getTotalSickInRegion();
             long death = 0;
-            if (DiseaseStatisticInRegionDTO.getTotalDeathsInRegion() != null)
-                death = DiseaseStatisticInRegionDTO.getTotalDeathsInRegion();
+            if (diseaseStatisticInRegionDto.getTotalDeathsInRegion() != null)
+                death = diseaseStatisticInRegionDto.getTotalDeathsInRegion();
             diseaseStatisticInRegionRepository.save(new DiseaseStatisticInRegion(sick, death, now, step, region.get()));
         }
     }
