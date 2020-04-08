@@ -48,7 +48,14 @@ public class DiseaseStatisticInRegionService {
     }
 
     boolean ifSameDataInPreviousStep(DiseaseStatisticInRegionDto totalDiseaseStatisticInRegionDto, long step) {
+
+        if (totalDiseaseStatisticInRegionDto == null || step <= 0) {
+            throw new IllegalArgumentException(LogResourceText.DATA_SCRAPPING_NULL_OBJECT
+                    + "ifSameDataInPreviousStep-> obj: totalDiseaseStatisticInRegionDto, or wrong step: " + step);
+        }
+
         Optional<Region> region = regionRepository.findByRegion("Cała Polska");
+
         if (region.isEmpty()) {
             throw new IllegalArgumentException(LogResourceText.DATA_SCRAPPING_NULL_OBJECT);
         }
@@ -56,12 +63,15 @@ public class DiseaseStatisticInRegionService {
         if (step == 1) {
             return false;
         }
+
         Optional<DiseaseStatisticInRegion> diseaseStatisticInRegionOptional = diseaseStatisticInRegionRepository
                 .findByRegionAndTimeStep(region.get(), step - 1);
-        if (diseaseStatisticInRegionOptional.isPresent() && totalDiseaseStatisticInRegionDto == null) {
+
+        if (diseaseStatisticInRegionOptional.isEmpty()) {
             throw new IllegalArgumentException(LogResourceText.DATA_SCRAPPING_NULL_OBJECT
-                    + "ifSameDataInPreviousStep-> obj: diseaseStatisticInRegionOptional or totalDiseaseStatisticInRegionDto");
+                    + "ifSameDataInPreviousStep-> obj: diseaseStatisticInRegionOptional empty");
         }
+
         DiseaseStatisticInRegion diseaseStatisticInRegion = diseaseStatisticInRegionOptional.get();
         return diseaseStatisticInRegion.getTotalDiseaseCasesInRegion() == totalDiseaseStatisticInRegionDto.getTotalSickInRegion() &&
                 diseaseStatisticInRegion.getTotalDeathsInRegion() == totalDiseaseStatisticInRegionDto.getTotalDeathsInRegion();
