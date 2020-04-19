@@ -9,9 +9,9 @@ import java.util.Optional;
 
 @Repository
 public interface DiseaseStatisticInRegionRepository extends JpaRepository<DiseaseStatisticInRegion, Integer> {
+
     Optional<DiseaseStatisticInRegion> findByRegionAndTimeStep(Region region, long timeStep);
 
     Optional<DiseaseStatisticInRegion> findTopByOrderByTimeStepDesc();
+
 }
-//    private long totalDiseaseCasesInRegion;
-//    private long totalDeathsInRegion;
