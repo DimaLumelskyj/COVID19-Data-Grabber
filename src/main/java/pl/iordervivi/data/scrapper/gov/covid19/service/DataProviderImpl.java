@@ -29,6 +29,25 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DataProviderImpl implements DataProvider {
 
+    private final static int TOTAL_NUMBER_OF_REGIONS_IN_POLAND_WITH_WHOLE_COUNTRY = 17;
+    private final static String[] REGION_NAME_VALIDATION_SET = {"Cała Polska",
+            "dolnośląskie",
+            "kujawsko-pomorskie",
+            "lubelskie",
+            "lubuskie",
+            "łódzkie",
+            "małopolskie",
+            "mazowieckie",
+            "opolskie",
+            "podkarpackie",
+            "podlaskie",
+            "pomorskie",
+            "śląskie",
+            "świętokrzyskie",
+            "warmińsko-mazurskie",
+            "wielkopolskie",
+            "zachodniopomorskie"};
+
     private final ModelMapperConfiguration modelMapper;
     private final ApplicationProperties applicationProperties;
     private final RegionService regionService;
@@ -58,7 +77,7 @@ public class DataProviderImpl implements DataProvider {
     boolean validateDiseaseStatisticInRegions(List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions) {
         if (diseaseStatisticInRegions == null ||
                 diseaseStatisticInRegions.size() !=
-                        applicationProperties.getTOTAL_NUMBER_OF_REGIONS_IN_POLAND_WITH_WHOLE_COUNTRY()) {
+                        TOTAL_NUMBER_OF_REGIONS_IN_POLAND_WITH_WHOLE_COUNTRY) {
             throw new IllegalArgumentException(LogResourceText.DATA_SCRAPPING_NULL_DTO_LIST);
         }
         for (DiseaseStatisticInRegionDto diseaseStatisticInRegion : diseaseStatisticInRegions) {
@@ -66,7 +85,7 @@ public class DataProviderImpl implements DataProvider {
                 throw new IllegalArgumentException(LogResourceText.DATA_SCRAPPING_NULL_DTO_LIST);
             }
         }
-        for (String regionName : applicationProperties.getREGION_NAME_VALIDATION_SET()) {
+        for (String regionName : REGION_NAME_VALIDATION_SET) {
             if (!checkIfRegionNameIsInSet(diseaseStatisticInRegions, regionName)) {
                 throw new IllegalArgumentException(LogResourceText.DATA_SCRAPPING_REGION_NOT_FOUND);
             }
@@ -135,7 +154,7 @@ public class DataProviderImpl implements DataProvider {
             List<DiseaseStatisticInRegionDto> diseaseStatisticInRegionDtoList) {
         for (DiseaseStatisticInRegionDto DiseaseStatisticInRegionDTO : diseaseStatisticInRegionDtoList) {
             if (DiseaseStatisticInRegionDTO.getRegionName()
-                    .equals(applicationProperties.getREGION_NAME_VALIDATION_SET()[0])) {
+                    .equals(REGION_NAME_VALIDATION_SET[0])) {
                 return Optional.of(DiseaseStatisticInRegionDTO);
             }
         }

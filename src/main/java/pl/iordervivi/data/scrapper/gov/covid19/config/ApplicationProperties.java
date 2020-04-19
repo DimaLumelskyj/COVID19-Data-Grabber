@@ -11,24 +11,6 @@ import javax.validation.constraints.PositiveOrZero;
 @Configuration
 @Getter
 public class ApplicationProperties {
-    private final int TOTAL_NUMBER_OF_REGIONS_IN_POLAND_WITH_WHOLE_COUNTRY = 17;
-    private final String[] REGION_NAME_VALIDATION_SET = {"Cała Polska",
-            "dolnośląskie",
-            "kujawsko-pomorskie",
-            "lubelskie",
-            "lubuskie",
-            "łódzkie",
-            "małopolskie",
-            "mazowieckie",
-            "opolskie",
-            "podkarpackie",
-            "podlaskie",
-            "pomorskie",
-            "śląskie",
-            "świętokrzyskie",
-            "warmińsko-mazurskie",
-            "wielkopolskie",
-            "zachodniopomorskie"};
     @Value("${application.timezone}")
     private String applicationTimezone;
     @Value("${job.web.scrap.frequency}")
