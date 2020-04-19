@@ -23,8 +23,8 @@ class DataProviderImplTest {
     public ExpectedException exceptionRule = ExpectedException.none();
     private DataProviderImpl dataProvider;
     @InjectMocks
-    private ApplicationProperties applicationProperties = new ApplicationProperties();
-    private ModelMapperConfiguration modelMapper = new ModelMapperConfiguration();
+    private final ApplicationProperties applicationProperties = new ApplicationProperties();
+    private final ModelMapperConfiguration modelMapper = new ModelMapperConfiguration();
 
     @BeforeEach
     void initData() {
@@ -161,13 +161,5 @@ class DataProviderImplTest {
         //then
         assertTrue(result);
     }
-
-    @Test
-    void checkIfThereIsNewDataFalseTest() {
-        //given
-        //when
-        //then
-    }
-
 
 }
