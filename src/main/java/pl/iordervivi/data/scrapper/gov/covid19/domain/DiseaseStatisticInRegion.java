@@ -28,12 +28,12 @@ public class DiseaseStatisticInRegion {
     @Column(name = "total_sick_in_region", nullable = false)
     @Min(value = 0, message = "Min value is 0")
     @NotNull(message = "Number of sick people  on covid19 cannot be null/blank.")
-    private long totalDiseaseCasesInRegion;
+    private long diseaseCasesInRegion;
 
     @Column(name = "total_deaths_in_region", nullable = false)
     @Min(value = 0, message = "Min value is 0")
     @NotNull(message = "Number of deaths from covid19 cannot be null/blank.")
-    private long totalDeathCasesInRegion;
+    private long deathCasesInRegion;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime addedAt;
@@ -41,13 +41,13 @@ public class DiseaseStatisticInRegion {
     @Column(nullable = false, updatable = false)
     private long timeStep;
 
-    public DiseaseStatisticInRegion(long totalSickInRegion,
-                                    long totalDeathCasesInRegion,
+    public DiseaseStatisticInRegion(long diseaseCasesInRegion,
+                                    long deathCasesInRegion,
                                     LocalDateTime addedAt,
                                     long timeStep,
                                     Region region) {
-        this.totalDiseaseCasesInRegion = totalSickInRegion;
-        this.totalDeathCasesInRegion = totalDeathCasesInRegion;
+        this.diseaseCasesInRegion = diseaseCasesInRegion;
+        this.deathCasesInRegion = deathCasesInRegion;
         this.addedAt = addedAt;
         this.timeStep = timeStep;
         this.region = region;

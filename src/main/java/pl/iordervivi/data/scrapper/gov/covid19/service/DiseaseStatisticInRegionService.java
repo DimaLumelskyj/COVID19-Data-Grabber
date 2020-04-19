@@ -70,7 +70,7 @@ public class DiseaseStatisticInRegionService {
         }
 
         DiseaseStatisticInRegion diseaseStatisticInRegion = diseaseStatisticInRegionOptional.get();
-        return diseaseStatisticInRegion.getTotalDiseaseCasesInRegion() == totalDiseaseStatisticInRegionDto.getTotalDiseaseCasesInRegion() &&
-                diseaseStatisticInRegion.getTotalDeathCasesInRegion() == totalDiseaseStatisticInRegionDto.getTotalDeathCasesInRegion();
+        return diseaseStatisticInRegion.getDiseaseCasesInRegion() == totalDiseaseStatisticInRegionDto.getTotalDiseaseCasesInRegion() &&
+                diseaseStatisticInRegion.getDeathCasesInRegion() == totalDiseaseStatisticInRegionDto.getTotalDeathCasesInRegion();
     }
 }
