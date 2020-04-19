@@ -59,8 +59,7 @@ public class DataProviderImpl implements DataProvider {
         long step = diseaseStatisticInRegionService.getCurrentStep();
         List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions = getDiseaseStatisticInRegions();
 
-        if (validateDiseaseStatisticInRegions(diseaseStatisticInRegions))
-            log.trace("Dto list validation successful");
+        validateDiseaseStatisticInRegions(diseaseStatisticInRegions);
 
         if (!checkIfThereIsNewData(diseaseStatisticInRegions, step)) {
             log.info(LogResourceText.DATA_SCRAPPING_SAME_DATA);
@@ -74,7 +73,7 @@ public class DataProviderImpl implements DataProvider {
         log.info(LogResourceText.DATA_SCRAPPING_COMPLETE);
     }
 
-    boolean validateDiseaseStatisticInRegions(List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions) {
+    void validateDiseaseStatisticInRegions(List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions) {
         if (diseaseStatisticInRegions == null ||
                 diseaseStatisticInRegions.size() !=
                         TOTAL_NUMBER_OF_REGIONS_IN_POLAND_WITH_WHOLE_COUNTRY) {
@@ -90,7 +89,6 @@ public class DataProviderImpl implements DataProvider {
                 throw new IllegalArgumentException(LogResourceText.DATA_SCRAPPING_REGION_NOT_FOUND);
             }
         }
-        return true;
     }
 
     boolean checkIfRegionNameIsInSet(List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions,
