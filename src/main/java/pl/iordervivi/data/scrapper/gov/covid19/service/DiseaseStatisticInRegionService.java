@@ -8,6 +8,7 @@ import pl.iordervivi.data.scrapper.gov.covid19.dto.DiseaseStatisticInRegionDto;
 import pl.iordervivi.data.scrapper.gov.covid19.repo.DiseaseStatisticInRegionRepository;
 import pl.iordervivi.data.scrapper.gov.covid19.repo.RegionRepository;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -19,22 +20,30 @@ public class DiseaseStatisticInRegionService {
     private final RegionRepository regionRepository;
 
 
+    @Transactional
     void addSick(List<DiseaseStatisticInRegionDto> diseaseStatisticInRegionDtoList,
                  LocalDateTime now,
                  long step) {
         for (DiseaseStatisticInRegionDto diseaseStatisticInRegionDto : diseaseStatisticInRegionDtoList) {
 
-            Optional<Region> region = regionRepository.findByRegion(diseaseStatisticInRegionDto.getRegionName());
+            Region region = regionRepository.findByRegion(diseaseStatisticInRegionDto.getRegionName())
+                    .orElseThrow(() -> new IllegalArgumentException("Region not found in DB during adding sick data to the database: " + diseaseStatisticInRegionDto.getRegionName()));
 
-            if (region.isEmpty()) {
-                String er = "Region not found in DB during adding sick data to the database: " + diseaseStatisticInRegionDto.getRegionName();
-                throw new IllegalArgumentException(er);
+            long sick;
+            long death;
+            if (diseaseStatisticInRegionDto.getDiseaseCasesInRegion() != null) {
+                sick = diseaseStatisticInRegionDto.getDiseaseCasesInRegion();
+            } else {
+                sick = 0;
             }
 
-            long sick = diseaseStatisticInRegionDto.getTotalDiseaseCasesInRegion();
-            long death = diseaseStatisticInRegionDto.getTotalDeathCasesInRegion();
+            if (diseaseStatisticInRegionDto.getDeathCasesInRegion() != null) {
+                death = diseaseStatisticInRegionDto.getDeathCasesInRegion();
+            } else {
+                death = 0;
+            }
 
-            diseaseStatisticInRegionRepository.save(new DiseaseStatisticInRegion(sick, death, now, step, region.get()));
+            diseaseStatisticInRegionRepository.save(new DiseaseStatisticInRegion(sick, death, now, step, region));
         }
     }
 
@@ -64,7 +73,7 @@ public class DiseaseStatisticInRegionService {
                 .findByRegionAndTimeStep(region.get(), step - 1).orElseThrow(() -> new IllegalArgumentException("Object can't be empty:"
                         + "ifSameDataInPreviousStep-> obj: diseaseStatisticInRegionOptional empty"));
 
-        return diseaseStatisticInRegion.getDiseaseCasesInRegion() == totalDiseaseStatisticInRegionDto.getTotalDiseaseCasesInRegion() &&
-                diseaseStatisticInRegion.getDeathCasesInRegion() == totalDiseaseStatisticInRegionDto.getTotalDeathCasesInRegion();
+        return diseaseStatisticInRegion.getDiseaseCasesInRegion() == totalDiseaseStatisticInRegionDto.getDiseaseCasesInRegion() &&
+                diseaseStatisticInRegion.getDeathCasesInRegion() == totalDiseaseStatisticInRegionDto.getDeathCasesInRegion();
     }
 }

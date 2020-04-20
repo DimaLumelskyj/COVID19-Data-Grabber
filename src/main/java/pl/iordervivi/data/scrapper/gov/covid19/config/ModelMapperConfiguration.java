@@ -2,19 +2,17 @@ package pl.iordervivi.data.scrapper.gov.covid19.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.DeserializationProblemHandler;
-import lombok.Getter;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import pl.iordervivi.data.scrapper.gov.covid19.util.UnMarshallingErrorHandler;
 
-@Component
-@Getter
+@Configuration
 public class ModelMapperConfiguration {
-    private final ObjectMapper mapper;
 
-    public ModelMapperConfiguration() {
-        this.mapper = new ObjectMapper();
+    @Bean
+    ObjectMapper modelMapper() {
         DeserializationProblemHandler deserializationProblemHandler = new UnMarshallingErrorHandler();
-        mapper.addHandler(deserializationProblemHandler);
+        return new ObjectMapper().addHandler(deserializationProblemHandler);
     }
 
 }

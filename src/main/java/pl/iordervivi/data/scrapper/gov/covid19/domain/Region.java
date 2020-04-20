@@ -1,15 +1,17 @@
 package pl.iordervivi.data.scrapper.gov.covid19.domain;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @RequiredArgsConstructor
 @Entity
 @EqualsAndHashCode(of = "id")

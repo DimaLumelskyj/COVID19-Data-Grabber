@@ -146,10 +146,10 @@ class DiseaseStatisticInRegionServiceTest {
         DiseaseStatisticInRegionDto totalDiseaseStatisticInRegionDto = new DiseaseStatisticInRegionDto();
         DiseaseStatisticInRegion diseaseStatisticInRegion = new DiseaseStatisticInRegion();
         Region region = new Region();
-        totalDiseaseStatisticInRegionDto.setTotalDiseaseCasesInRegion(diseases);
-        totalDiseaseStatisticInRegionDto.setTotalDeathCasesInRegion(deaths);
-        diseaseStatisticInRegion.setTotalDiseaseCasesInRegion(diseases);
-        diseaseStatisticInRegion.setTotalDeathCasesInRegion(deaths);
+        totalDiseaseStatisticInRegionDto.setDiseaseCasesInRegion(diseases);
+        totalDiseaseStatisticInRegionDto.setDeathCasesInRegion(deaths);
+        diseaseStatisticInRegion.setDiseaseCasesInRegion(diseases);
+        diseaseStatisticInRegion.setDeathCasesInRegion(deaths);
         region.setRegion("Cała Polska");
         when(regionRepository.findByRegion("Cała Polska")).thenReturn(Optional.of(region));
         when(diseaseStatisticInRegionRepository.findByRegionAndTimeStep(region, 1))
@@ -175,10 +175,10 @@ class DiseaseStatisticInRegionServiceTest {
         DiseaseStatisticInRegionDto totalDiseaseStatisticInRegionDto = new DiseaseStatisticInRegionDto();
         DiseaseStatisticInRegion diseaseStatisticInRegion = new DiseaseStatisticInRegion();
         Region region = new Region();
-        totalDiseaseStatisticInRegionDto.setTotalDiseaseCasesInRegion(diseasesDto);
-        totalDiseaseStatisticInRegionDto.setTotalDeathCasesInRegion(deathsDto);
-        diseaseStatisticInRegion.setTotalDiseaseCasesInRegion(diseases);
-        diseaseStatisticInRegion.setTotalDeathCasesInRegion(deaths);
+        totalDiseaseStatisticInRegionDto.setDiseaseCasesInRegion(diseasesDto);
+        totalDiseaseStatisticInRegionDto.setDeathCasesInRegion(deathsDto);
+        diseaseStatisticInRegion.setDiseaseCasesInRegion(diseases);
+        diseaseStatisticInRegion.setDeathCasesInRegion(deaths);
         region.setRegion("Cała Polska");
         when(regionRepository.findByRegion("Cała Polska")).thenReturn(Optional.of(region));
         when(diseaseStatisticInRegionRepository.findByRegionAndTimeStep(region, 1))

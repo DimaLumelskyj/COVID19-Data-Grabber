@@ -1,6 +1,7 @@
 package pl.iordervivi.data.scrapper.gov.covid19.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Service;
 import pl.iordervivi.data.scrapper.gov.covid19.config.ApplicationProperties;
-import pl.iordervivi.data.scrapper.gov.covid19.config.ModelMapperConfiguration;
 import pl.iordervivi.data.scrapper.gov.covid19.dto.DiseaseStatisticInRegionDto;
 
 import javax.transaction.Transactional;
@@ -47,7 +47,7 @@ public class DataProviderImpl implements DataProvider {
             "wielkopolskie",
             "zachodniopomorskie"};
 
-    private final ModelMapperConfiguration modelMapper;
+    private final ObjectMapper modelMapper;
     private final ApplicationProperties applicationProperties;
     private final RegionService regionService;
     private final DiseaseStatisticInRegionService diseaseStatisticInRegionService;
@@ -113,7 +113,7 @@ public class DataProviderImpl implements DataProvider {
                 .constructCollectionType(List.class,
                         DiseaseStatisticInRegionDto.class);
         try {
-            return modelMapper.getMapper().readValue(jsonData, typeReference);
+            return modelMapper.readValue(jsonData, typeReference);
         } catch (JsonProcessingException e) {
             log.error("Json model mapper processing error: ");
             e.printStackTrace();
