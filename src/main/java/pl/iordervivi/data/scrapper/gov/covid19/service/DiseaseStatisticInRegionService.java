@@ -60,15 +60,10 @@ public class DiseaseStatisticInRegionService {
             return false;
         }
 
-        Optional<DiseaseStatisticInRegion> diseaseStatisticInRegionOptional = diseaseStatisticInRegionRepository
-                .findByRegionAndTimeStep(region.get(), step - 1);
+        DiseaseStatisticInRegion diseaseStatisticInRegion = diseaseStatisticInRegionRepository
+                .findByRegionAndTimeStep(region.get(), step - 1).orElseThrow(() -> new IllegalArgumentException("Object can't be empty:"
+                        + "ifSameDataInPreviousStep-> obj: diseaseStatisticInRegionOptional empty"));
 
-        if (diseaseStatisticInRegionOptional.isEmpty()) {
-            throw new IllegalArgumentException("Object can't be empty:"
-                    + "ifSameDataInPreviousStep-> obj: diseaseStatisticInRegionOptional empty");
-        }
-
-        DiseaseStatisticInRegion diseaseStatisticInRegion = diseaseStatisticInRegionOptional.get();
         return diseaseStatisticInRegion.getDiseaseCasesInRegion() == totalDiseaseStatisticInRegionDto.getTotalDiseaseCasesInRegion() &&
                 diseaseStatisticInRegion.getDeathCasesInRegion() == totalDiseaseStatisticInRegionDto.getTotalDeathCasesInRegion();
     }
