@@ -11,7 +11,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Service;
 import pl.iordervivi.data.scrapper.gov.covid19.config.ApplicationProperties;
-import pl.iordervivi.data.scrapper.gov.covid19.config.LogResourceText;
 import pl.iordervivi.data.scrapper.gov.covid19.config.ModelMapperConfiguration;
 import pl.iordervivi.data.scrapper.gov.covid19.dto.DiseaseStatisticInRegionDto;
 
@@ -55,14 +54,13 @@ public class DataProviderImpl implements DataProvider {
 
     @Override
     public void addDiseaseStatisticByRegions() {
-        log.info(LogResourceText.DATA_SCRAPPING_STARTED);
         long step = diseaseStatisticInRegionService.getCurrentStep();
         List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions = getDiseaseStatisticInRegions();
 
         validateDiseaseStatisticInRegions(diseaseStatisticInRegions);
 
         if (!checkIfThereIsNewData(diseaseStatisticInRegions, step)) {
-            log.info(LogResourceText.DATA_SCRAPPING_SAME_DATA);
+            log.info("There is the same data in previous step so not adding to the database");
             return;
         }
 
@@ -70,23 +68,23 @@ public class DataProviderImpl implements DataProvider {
         diseaseStatisticInRegionService.addSick(diseaseStatisticInRegions,
                 LocalDateTime.now(),
                 step);
-        log.info(LogResourceText.DATA_SCRAPPING_COMPLETE);
+        log.info("Parsing complete");
     }
 
     void validateDiseaseStatisticInRegions(List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions) {
         if (diseaseStatisticInRegions == null ||
                 diseaseStatisticInRegions.size() !=
                         TOTAL_NUMBER_OF_REGIONS_IN_POLAND_WITH_WHOLE_COUNTRY) {
-            throw new IllegalArgumentException(LogResourceText.DATA_SCRAPPING_NULL_DTO_LIST);
+            throw new IllegalArgumentException("List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions can't be empty or have null elements");
         }
         for (DiseaseStatisticInRegionDto diseaseStatisticInRegion : diseaseStatisticInRegions) {
             if (diseaseStatisticInRegion == null) {
-                throw new IllegalArgumentException(LogResourceText.DATA_SCRAPPING_NULL_DTO_LIST);
+                throw new IllegalArgumentException("List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions can't be empty or have null elements");
             }
         }
         for (String regionName : REGION_NAME_VALIDATION_SET) {
             if (!checkIfRegionNameIsInSet(diseaseStatisticInRegions, regionName)) {
-                throw new IllegalArgumentException(LogResourceText.DATA_SCRAPPING_REGION_NOT_FOUND);
+                throw new IllegalArgumentException("Region name not valid, possibly data provider not working or change data format");
             }
         }
     }
@@ -117,7 +115,7 @@ public class DataProviderImpl implements DataProvider {
         try {
             return modelMapper.getMapper().readValue(jsonData, typeReference);
         } catch (JsonProcessingException e) {
-            log.error(LogResourceText.DATA_SCRAPPING_JSON_MM_ERROR);
+            log.error("Json model mapper processing error: ");
             e.printStackTrace();
         }
         return Collections.emptyList();
@@ -132,7 +130,8 @@ public class DataProviderImpl implements DataProvider {
         }
 
         if (document == null) {
-            throw new IllegalArgumentException(LogResourceText.DATA_SCRAPPING_NULL_WEB_PAGE_CONTENT);
+            throw new IllegalArgumentException("getDiseaseStatisticInRegions()-> var document is null after loading from WEB," +
+                    " possibly this web page doesnt exists any more, needs new data provider");
         }
         Element formElement = document.select("pre").first();
         String jsonData = StringUtils.substringBetween(formElement.toString(),

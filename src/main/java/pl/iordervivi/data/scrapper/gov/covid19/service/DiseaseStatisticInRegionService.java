@@ -2,7 +2,6 @@ package pl.iordervivi.data.scrapper.gov.covid19.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.iordervivi.data.scrapper.gov.covid19.config.LogResourceText;
 import pl.iordervivi.data.scrapper.gov.covid19.domain.DiseaseStatisticInRegion;
 import pl.iordervivi.data.scrapper.gov.covid19.domain.Region;
 import pl.iordervivi.data.scrapper.gov.covid19.dto.DiseaseStatisticInRegionDto;
@@ -47,14 +46,14 @@ public class DiseaseStatisticInRegionService {
     boolean ifSameDataInPreviousStep(DiseaseStatisticInRegionDto totalDiseaseStatisticInRegionDto, long step) {
 
         if (totalDiseaseStatisticInRegionDto == null || step <= 0) {
-            throw new IllegalArgumentException(LogResourceText.DATA_SCRAPPING_NULL_OBJECT
+            throw new IllegalArgumentException("Object can't be empty:"
                     + "ifSameDataInPreviousStep-> obj: totalDiseaseStatisticInRegionDto, or wrong step: " + step);
         }
 
         Optional<Region> region = regionRepository.findByRegion("Cała Polska");
 
         if (region.isEmpty()) {
-            throw new IllegalArgumentException(LogResourceText.DATA_SCRAPPING_NULL_OBJECT);
+            throw new IllegalArgumentException("Object region can't be empty");
         }
 
         if (step == 1) {
@@ -65,7 +64,7 @@ public class DiseaseStatisticInRegionService {
                 .findByRegionAndTimeStep(region.get(), step - 1);
 
         if (diseaseStatisticInRegionOptional.isEmpty()) {
-            throw new IllegalArgumentException(LogResourceText.DATA_SCRAPPING_NULL_OBJECT
+            throw new IllegalArgumentException("Object can't be empty:"
                     + "ifSameDataInPreviousStep-> obj: diseaseStatisticInRegionOptional empty");
         }
 

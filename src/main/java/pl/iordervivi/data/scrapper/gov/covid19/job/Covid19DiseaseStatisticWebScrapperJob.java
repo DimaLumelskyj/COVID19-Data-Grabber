@@ -5,7 +5,6 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.iordervivi.data.scrapper.gov.covid19.config.LogResourceText;
 import pl.iordervivi.data.scrapper.gov.covid19.service.DataProvider;
 
 @Component
@@ -21,7 +20,7 @@ public class Covid19DiseaseStatisticWebScrapperJob implements Job {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
-        log.info(LogResourceText.WEB_SCRAPPING_STARTED);
+        log.info("Job web scrapping of disease covid-19 statistic starting");
         dataProvider.addDiseaseStatisticByRegions();
     }
 }

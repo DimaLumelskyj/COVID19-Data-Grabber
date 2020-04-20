@@ -40,7 +40,7 @@ public class SchedulerConfiguration {
         factory.setJobFactory(jobFactory);
         factory.setQuartzProperties(quartzProperties());
         factory.setTriggers(trigger);
-        log.info(LogResourceText.JOB_SCHEDULER_STARTED);
+        log.info("Scheduler starting jobs:");
         return factory;
     }
 
@@ -48,7 +48,6 @@ public class SchedulerConfiguration {
     public SimpleTriggerFactoryBean jobTrigger(
             JobDetail jobDetail,
             ApplicationProperties applicationProperties) {
-        log.info(LogResourceText.JOB_TRIGGER_STARTED);
         SimpleTriggerFactoryBean factoryBean = new SimpleTriggerFactoryBean();
         factoryBean.setJobDetail(jobDetail);
         factoryBean.setStartDelay(0L);
