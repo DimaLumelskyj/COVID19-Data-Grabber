@@ -29,18 +29,15 @@ public class DiseaseStatisticInRegionService {
             Region region = regionRepository.findByRegion(diseaseStatisticInRegionDto.getRegionName())
                     .orElseThrow(() -> new IllegalArgumentException("Region not found in DB during adding sick data to the database: " + diseaseStatisticInRegionDto.getRegionName()));
 
-            long sick;
-            long death;
+            long sick = 0;
+            long death = 0;
+
             if (diseaseStatisticInRegionDto.getDiseaseCasesInRegion() != null) {
                 sick = diseaseStatisticInRegionDto.getDiseaseCasesInRegion();
-            } else {
-                sick = 0;
             }
 
             if (diseaseStatisticInRegionDto.getDeathCasesInRegion() != null) {
                 death = diseaseStatisticInRegionDto.getDeathCasesInRegion();
-            } else {
-                death = 0;
             }
 
             diseaseStatisticInRegionRepository.save(new DiseaseStatisticInRegion(sick, death, now, step, region));
