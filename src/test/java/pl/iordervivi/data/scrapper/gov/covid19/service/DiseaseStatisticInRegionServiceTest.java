@@ -1,12 +1,13 @@
 package pl.iordervivi.data.scrapper.gov.covid19.service;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.iordervivi.data.scrapper.gov.covid19.domain.DiseaseStatisticInRegion;
 import pl.iordervivi.data.scrapper.gov.covid19.domain.Region;
 import pl.iordervivi.data.scrapper.gov.covid19.dto.DiseaseStatisticInRegionDto;
@@ -17,8 +18,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
+@ExtendWith(MockitoExtension.class)
 class DiseaseStatisticInRegionServiceTest {
 
     @InjectMocks
@@ -29,11 +30,6 @@ class DiseaseStatisticInRegionServiceTest {
 
     @Mock
     private RegionRepository regionRepository;
-
-    @BeforeEach
-    void setUp() {
-        initMocks(this);
-    }
 
     @Test
     void testNoDataAboutStepsInRepositoryGetCurrentStepExpectedOne() {
@@ -60,10 +56,6 @@ class DiseaseStatisticInRegionServiceTest {
 
     @Test
     void testNullInputDtoIfSameDataInPreviousStepExpectedIllegalArgumentException() {
-        //given
-        DiseaseStatisticInRegionDto totalDiseaseStatisticInRegionDto = new DiseaseStatisticInRegionDto();
-        when(regionRepository.findByRegion("Cała Polska")).thenReturn(Optional.empty());
-        //when
         //then
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> diseaseStatisticInRegionService.ifSameDataInPreviousStep(null,
@@ -74,8 +66,6 @@ class DiseaseStatisticInRegionServiceTest {
     void testZeroStepIfSameDataInPreviousStepExpectedIllegalArgumentException() {
         //given
         DiseaseStatisticInRegionDto totalDiseaseStatisticInRegionDto = new DiseaseStatisticInRegionDto();
-        when(regionRepository.findByRegion("Cała Polska")).thenReturn(Optional.empty());
-        //when
         //then
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> diseaseStatisticInRegionService.ifSameDataInPreviousStep(totalDiseaseStatisticInRegionDto,
@@ -86,8 +76,6 @@ class DiseaseStatisticInRegionServiceTest {
     void testNegativeStepIfSameDataInPreviousStepExpectedIllegalArgumentException() {
         //given
         DiseaseStatisticInRegionDto totalDiseaseStatisticInRegionDto = new DiseaseStatisticInRegionDto();
-        when(regionRepository.findByRegion("Cała Polska")).thenReturn(Optional.empty());
-        //when
         //then
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> diseaseStatisticInRegionService.ifSameDataInPreviousStep(totalDiseaseStatisticInRegionDto,

@@ -3,9 +3,10 @@ package pl.iordervivi.data.scrapper.gov.covid19.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Rule;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.rules.ExpectedException;
 import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import pl.iordervivi.data.scrapper.gov.covid19.config.ApplicationProperties;
 import pl.iordervivi.data.scrapper.gov.covid19.dto.DiseaseStatisticInRegionDto;
@@ -16,7 +17,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
-
+@ExtendWith(MockitoExtension.class)
 class DataProviderImplTest {
 
     private final static String[] REGION_NAME_VALIDATION_SET = {"Cała Polska",
@@ -46,7 +47,6 @@ class DataProviderImplTest {
 
     @BeforeEach
     void initData() {
-        MockitoAnnotations.initMocks(this);
 
         String applicationTimezone = "UTC";
         int frequency = 20;
@@ -70,11 +70,8 @@ class DataProviderImplTest {
 
     @Test
     void testNullInputListValidateDiseaseStatisticInRegionsExpectsIllegalArgumentException() {
-        //given
-        List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions = null;
-        //when
         //then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> dataProvider.validateDiseaseStatisticInRegions(diseaseStatisticInRegions));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> dataProvider.validateDiseaseStatisticInRegions(null));
     }
 
     @Test
