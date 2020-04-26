@@ -1,10 +1,8 @@
 package pl.iordervivi.data.scrapper.gov.covid19.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Rule;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.rules.ExpectedException;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -38,8 +36,6 @@ class DataProviderImplTest {
             "wielkopolskie",
             "zachodniopomorskie"};
 
-    @Rule
-    public ExpectedException exceptionRule = ExpectedException.none();
     private DataProviderImpl dataProvider;
     @InjectMocks
     private final ApplicationProperties applicationProperties = new ApplicationProperties();
@@ -122,7 +118,6 @@ class DataProviderImplTest {
         //given
         List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions = new ArrayList<>();
         int nullPosition = repetitionInfo.getCurrentRepetition() - 1;
-        System.out.println("Repeated test number: " + repetitionInfo.getCurrentRepetition());
         for (int i = 0; i < 17; i++) {
             if (i == nullPosition) {
                 diseaseStatisticInRegions.add(null);
@@ -130,7 +125,6 @@ class DataProviderImplTest {
                 diseaseStatisticInRegions.add(new DiseaseStatisticInRegionDto());
             }
         }
-        System.out.println("Generated data list: " + diseaseStatisticInRegions);
         //when
         //then
         Assertions.assertThrows(IllegalArgumentException.class, () -> dataProvider.validateDiseaseStatisticInRegions(diseaseStatisticInRegions));
@@ -141,7 +135,6 @@ class DataProviderImplTest {
         //given
         List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions = new ArrayList<>();
         int nullPosition = repetitionInfo.getCurrentRepetition() - 1;
-        System.out.println("Repeated test number: " + repetitionInfo.getCurrentRepetition());
         for (int i = 0; i < 17; i++) {
             if (i == nullPosition) {
                 diseaseStatisticInRegions.add(new DiseaseStatisticInRegionDto(" ",
@@ -155,7 +148,6 @@ class DataProviderImplTest {
                         ""));
             }
         }
-        System.out.println("Generated data list: " + diseaseStatisticInRegions);
         //when
         //then
         Assertions.assertThrows(IllegalArgumentException.class, () -> dataProvider.validateDiseaseStatisticInRegions(diseaseStatisticInRegions));
