@@ -4,12 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 import pl.iordervivi.data.scrapper.gov.covid19.config.ApplicationProperties;
 import pl.iordervivi.data.scrapper.gov.covid19.dto.DiseaseStatisticInRegionDto;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,28 +36,16 @@ class DataProviderImplTest {
             "wielkopolskie",
             "zachodniopomorskie"};
 
-    private DataProviderImpl dataProvider;
+
     @InjectMocks
-    private final ApplicationProperties applicationProperties = new ApplicationProperties();
-    private final ObjectMapper modelMapper = new ObjectMapper();
+    private DataProviderImpl dataProvider;
+    @Mock
+    private ObjectMapper modelMapper;
+    @Mock
+    private ApplicationProperties applicationProperties;
 
     @BeforeEach
     void initData() {
-
-        String applicationTimezone = "UTC";
-        int frequency = 30;//seconds
-        String dataProviderUrl = "www.url.com";
-
-        ReflectionTestUtils.setField(applicationProperties,
-                "applicationTimezone",
-                applicationTimezone);
-        ReflectionTestUtils.setField(applicationProperties,
-                "jobFrequency",
-                Duration.ofSeconds(30));
-        ReflectionTestUtils.setField(applicationProperties,
-                "dataProviderUrl",
-                dataProviderUrl);
-
         dataProvider = new DataProviderImpl(modelMapper,
                 applicationProperties,
                 null,
