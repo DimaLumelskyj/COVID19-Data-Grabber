@@ -26,6 +26,8 @@ import java.util.Properties;
 @RequiredArgsConstructor
 public class SchedulerConfiguration {
 
+    private final ApplicationProperties applicationProperties;
+
     @Bean
     public JobFactory jobFactory(ApplicationContext applicationContext) {
         SpringJobFactory jobFactory = new SpringJobFactory();
@@ -46,12 +48,11 @@ public class SchedulerConfiguration {
 
     @Bean
     public SimpleTriggerFactoryBean jobTrigger(
-            JobDetail jobDetail,
-            ApplicationProperties applicationProperties) {
+            JobDetail jobDetail) {
         SimpleTriggerFactoryBean factoryBean = new SimpleTriggerFactoryBean();
         factoryBean.setJobDetail(jobDetail);
         factoryBean.setStartDelay(0L);
-        factoryBean.setRepeatInterval(applicationProperties.getFrequencyInMilliseconds());
+        factoryBean.setRepeatInterval(applicationProperties.getJobFrequency().toMillis());
         factoryBean.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
         return factoryBean;
     }

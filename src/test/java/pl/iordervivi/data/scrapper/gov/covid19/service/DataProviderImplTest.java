@@ -9,6 +9,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import pl.iordervivi.data.scrapper.gov.covid19.config.ApplicationProperties;
 import pl.iordervivi.data.scrapper.gov.covid19.dto.DiseaseStatisticInRegionDto;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,15 +46,15 @@ class DataProviderImplTest {
     void initData() {
 
         String applicationTimezone = "UTC";
-        int frequency = 20;
+        int frequency = 30;//seconds
         String dataProviderUrl = "www.url.com";
 
         ReflectionTestUtils.setField(applicationProperties,
                 "applicationTimezone",
                 applicationTimezone);
         ReflectionTestUtils.setField(applicationProperties,
-                "frequency",
-                frequency);
+                "jobFrequency",
+                Duration.ofSeconds(30));
         ReflectionTestUtils.setField(applicationProperties,
                 "dataProviderUrl",
                 dataProviderUrl);
