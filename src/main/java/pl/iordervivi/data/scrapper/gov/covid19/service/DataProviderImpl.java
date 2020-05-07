@@ -144,6 +144,8 @@ public class DataProviderImpl implements DataProvider {
         jsonData = jsonData.replace("Województwo", "region");
         jsonData = jsonData.replace("Liczba", "sick");
         jsonData = jsonData.replace("sick zgonów", "deaths");
+        jsonData = jsonData.replaceAll("\\s", "");
+        jsonData = jsonData.replaceAll("CałaPolska", "Cała Polska");
         return jsonData;
     }
 
