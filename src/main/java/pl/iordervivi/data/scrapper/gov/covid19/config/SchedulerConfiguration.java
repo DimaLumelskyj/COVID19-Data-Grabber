@@ -52,7 +52,7 @@ public class SchedulerConfiguration {
         SimpleTriggerFactoryBean factoryBean = new SimpleTriggerFactoryBean();
         factoryBean.setJobDetail(jobDetail);
         factoryBean.setStartDelay(0L);
-        factoryBean.setRepeatInterval(applicationProperties.getJobFrequency().toMillis());
+        factoryBean.setRepeatInterval(applicationProperties.getJobRunningFrequency().toMillis());
         factoryBean.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
         return factoryBean;
     }

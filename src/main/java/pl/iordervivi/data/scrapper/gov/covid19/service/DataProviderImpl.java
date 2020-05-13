@@ -124,7 +124,7 @@ public class DataProviderImpl implements DataProvider {
     String webScrapperRun() {
         Document document = null;
         try {
-            document = Jsoup.connect(applicationProperties.getDataProviderUrl()).get();
+            document = Jsoup.connect(applicationProperties.getJobDataUrlProvider()).get();
         } catch (IOException e) {
             log.error(Arrays.toString(e.getStackTrace()));
         }

@@ -14,6 +14,6 @@ public class LocaleConfiguration {
 
     @PostConstruct
     public void init() {
-        TimeZone.setDefault(TimeZone.getTimeZone(applicationProperties.getApplicationTimezone()));
+        TimeZone.setDefault(TimeZone.getTimeZone(applicationProperties.getTimezone()));
     }
 }

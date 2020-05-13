@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @ExtendWith(MockitoExtension.class)
@@ -54,8 +55,15 @@ class DataProviderImplTest {
 
     @Test
     void testNullInputListValidateDiseaseStatisticInRegionsExpectsIllegalArgumentException() {
+
+        //given
+        String message = "List<DiseaseStatisticInRegionDto> diseaseStatisticInRegions can't be empty or have null elements";
+
+        //when
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> dataProvider.validateDiseaseStatisticInRegions(null));
+
         //then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> dataProvider.validateDiseaseStatisticInRegions(null));
+        assertEquals(message, exception.getMessage());
     }
 
     @Test
