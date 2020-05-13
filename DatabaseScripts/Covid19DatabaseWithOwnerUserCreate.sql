@@ -1,8 +1,7 @@
-DROP USER IF EXISTS covid19_user;
-CREATE USER covid19_user WITH PASSWORD 'user-password';
-
-
 DROP DATABASE IF EXISTS covid19;
+DROP USER IF EXISTS covid19_user;
+CREATE USER covid19_user WITH PASSWORD 'user2313';
+
 CREATE DATABASE covid19
     WITH
     OWNER = covid19_user

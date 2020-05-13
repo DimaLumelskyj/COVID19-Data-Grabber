@@ -1,12 +1,12 @@
 package pl.iordervivi.data.scrapper.gov.covid19.config;
 
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobDetail;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.quartz.spi.JobFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -15,14 +15,19 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
-import pl.iordervivi.data.scrapper.gov.covid19.job.SimpleJob;
+import pl.iordervivi.data.scrapper.gov.covid19.job.Covid19DiseaseStatisticWebScrapperJob;
 import pl.iordervivi.data.scrapper.gov.covid19.job.SpringJobFactory;
 
 import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
-public class SchedulerConfig {
+@Slf4j
+@RequiredArgsConstructor
+public class SchedulerConfiguration {
+
+    private final ApplicationProperties applicationProperties;
+
     @Bean
     public JobFactory jobFactory(ApplicationContext applicationContext) {
         SpringJobFactory jobFactory = new SpringJobFactory();
@@ -32,25 +37,22 @@ public class SchedulerConfig {
 
     @Bean
     public SchedulerFactoryBean schedulerFactoryBean(JobFactory jobFactory,
-                                                     Trigger simpleJobTrigger) throws IOException {
+                                                     Trigger trigger) throws IOException {
         SchedulerFactoryBean factory = new SchedulerFactoryBean();
         factory.setJobFactory(jobFactory);
         factory.setQuartzProperties(quartzProperties());
-        factory.setTriggers(simpleJobTrigger);
-        System.out.println("starting jobs....");
+        factory.setTriggers(trigger);
+        log.info("Scheduler starting jobs:");
         return factory;
     }
 
     @Bean
-    public SimpleTriggerFactoryBean simpleJobTrigger(
-            @Qualifier("simpleJobDetail") JobDetail jobDetail,
-            @Value("${simplejob.frequency}") long frequency) {
-        System.out.println("simpleJobTrigger");
-
+    public SimpleTriggerFactoryBean jobTrigger(
+            JobDetail jobDetail) {
         SimpleTriggerFactoryBean factoryBean = new SimpleTriggerFactoryBean();
         factoryBean.setJobDetail(jobDetail);
         factoryBean.setStartDelay(0L);
-        factoryBean.setRepeatInterval(frequency);
+        factoryBean.setRepeatInterval(applicationProperties.getJobRunningFrequency().toMillis());
         factoryBean.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
         return factoryBean;
     }
@@ -65,9 +67,9 @@ public class SchedulerConfig {
     }
 
     @Bean
-    public JobDetailFactoryBean simpleJobDetail() {
+    public JobDetailFactoryBean dataForCaved19StatisticWebScrapperJobDetail() {
         JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
-        factoryBean.setJobClass(SimpleJob.class);
+        factoryBean.setJobClass(Covid19DiseaseStatisticWebScrapperJob.class);
         factoryBean.setDurability(true);
         return factoryBean;
     }

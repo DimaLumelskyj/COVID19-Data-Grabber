@@ -1,0 +1,19 @@
+{
+  "properties": [
+    {
+      "name": "application.timezone",
+      "type": "java.lang.String",
+      "description": "Description for application.timezone."
+    },
+    {
+      "name": "application.job.running.frequency",
+      "type": "java.lang.String",
+      "description": "Description for application.job.running.frequency."
+    },
+    {
+      "name": "application.job.data.url.provider",
+      "type": "java.lang.String",
+      "description": "Description for application.job.data.url.provider."
+    }
+  ]
+}
